@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Risda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --peach-glow: #FBE4D6;
+    --pink-glow: #F6D2DB;
+    --blush: #F7DBE1;
+    --blush-deep: #EAB2BF;
+    --coral: #F3C89E;
+    --rose: #DE96A3;
+    --rose-deep: #C87E8F;
+    --rose-deepest: #A85D71;
+    --cream-petal: #FBE3C8;
+    --plum: #55424F;
+    --plum-soft: #8B7482;
+    --lav: #D3C1E8;
+    --mint: #BFE0CE;
+    --butter: #F5DB8E;
+    --leaf: #A9CDB2;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    height: 100%;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--plum);
+    overflow: hidden;
+    background: #FBF5F3;
+  }
+
+  .sequence{ position: relative; width: 100%; height: 100vh; }
+
+  .phase{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .phase.show{ opacity: 1; visibility: visible; }
+
+  /* ---------- Phase 1: heartbeat pulse ---------- */
+  #phase-pulse{
+    background:
+      radial-gradient(ellipse 55% 45% at 50% 46%, var(--pink-glow) 0%, transparent 70%),
+      radial-gradient(ellipse 70% 55% at 50% 60%, var(--peach-glow) 0%, transparent 65%),
+      #FBF5F3;
+  }
+  .pulse-heart{
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at 35% 32%, #FBBAC5, var(--rose-deepest) 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 40px 18px rgba(168, 93, 113, 0.4);
+    animation: heartBeat 1.6s ease-in-out infinite;
+  }
+  @keyframes heartBeat{
+    0%, 100%{ transform: scale(1); }
+    30%{ transform: scale(1.28); }
+    55%{ transform: scale(0.95); }
+    75%{ transform: scale(1.12); }
+  }
+
+  /* ---------- Phase 2: soft title banner ---------- */
+  #phase-title{ background: linear-gradient(135deg, #EFB98F 0%, #E093A0 45%, #B5677A 100%); }
+  .title-text{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(40px, 12vw, 58px);
+    color: #FFFBF8;
+    text-align: center;
+    line-height: 1.08;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-shadow: 0 2px 14px rgba(150, 90, 100, 0.18);
+  }
+  .title-text.in{ opacity: 1; transform: translateY(0); }
+  .title-rule{
+    width: 64px; height: 2px;
+    background: rgba(255, 251, 248, 0.7);
+    margin: 18px auto 14px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+  .title-rule.in{ opacity: 1; }
+  .title-sub{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #FCF0EA;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.35s;
+  }
+  .title-sub.in{ opacity: 1; }
+
+  /* ---------- Phase 3: birthday cake ---------- */
+  #phase-cake{
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 20%, var(--peach-glow) 0%, transparent 60%),
+      radial-gradient(ellipse 65% 55% at 50% 75%, var(--pink-glow) 0%, transparent 65%),
+      #FBF5F3;
+    padding: 28px 22px;
+    position: relative;
+  }
+
+  .cake-wrap{
+    width: 190px;
+    max-height: 220px;
+    overflow: hidden;
+    transition: opacity 0.5s ease, max-height 0.5s ease, margin 0.5s ease;
+  }
+  .cake-wrap.shrink{ opacity: 0; max-height: 0; margin: 0; pointer-events: none; }
+  .cake-svg{ width: 100%; height: auto; overflow: visible; }
+
+  .flame{ transform-origin: 50% 100%; animation: flicker 1.3s ease-in-out infinite; transition: opacity 0.35s ease, transform 0.35s ease; }
+  @keyframes flicker{
+    0%, 100%{ transform: scale(1) rotate(-3deg); }
+    50%{ transform: scale(1.12) rotate(3deg); }
+  }
+  .candle{ cursor: pointer; }
+  .candle.out .flame{ opacity: 0; transform: scale(0); animation: none; }
+  .candle.out .flame-glow{ opacity: 0; }
+
+  .smoke{
+    position: fixed;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(190,185,188,0.5);
+    pointer-events: none;
+    animation: smoke-rise 1.1s ease-out forwards;
+    z-index: 9;
+  }
+  @keyframes smoke-rise{
+    0%{ opacity: 0.7; transform: translate(0,0) scale(1); }
+    100%{ opacity: 0; transform: translate(6px,-38px) scale(2.6); }
+  }
+
+  .cake-caption{
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--plum-soft);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .cake-caption.in{ opacity: 1; transform: translateY(0); }
+
+  .name-tag{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15.5px;
+    color: var(--plum);
+    margin-top: 3px;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  .name-tag.in{ opacity: 1; }
+
+  /* wish form */
+  .wish-form{
+    margin-top: 14px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .wish-form.in{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .wish-label{ font-size: 13px; color: var(--plum-soft); text-align: center; margin: 0; }
+  #wishInput{
+    width: 100%;
+    border: 1px solid #F1E4E7;
+    background: #fff;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    color: var(--plum);
+    outline: none;
+  }
+  #wishInput:focus{ border-color: var(--rose-deep); }
+  .wish-submit{
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    color: #fff;
+    border: none;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 22px -10px rgba(190, 140, 150, 0.5);
+  }
+  .wish-submit:active{ transform: scale(0.97); }
+
+  /* wish result */
+  .wish-result{
+    margin-top: 14px;
+    width: 260px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .wish-result.in{ opacity: 1; transform: translateY(0) scale(1); }
+  .result-glow{
+    width: 44px; height: 44px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 32%, #fff, var(--coral) 70%);
+    box-shadow: 0 0 26px 10px rgba(247, 223, 201, 0.6);
+  }
+  .result-text{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--rose-deepest);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .result-sub{ font-size: 12px; color: var(--plum-soft); margin-top: 5px; }
+
+  .sparkle-fx{
+    position: fixed;
+    pointer-events: none;
+    font-size: 17px;
+    animation: rise-fade 1.5s ease-out forwards;
+    z-index: 10;
+  }
+  @keyframes rise-fade{
+    0%{ opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+    15%{ opacity: 1; }
+    100%{ opacity: 0; transform: translateY(-100px) scale(1.15) rotate(30deg); }
+  }
+
+  /* ---------- flower bouquet ---------- */
+  .bouquet-wrap{
+    margin-top: 10px;
+    width: 250px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .bouquet-wrap.in{ opacity: 1; transform: translateY(0); }
+  .bouquet-svg{ width: 100%; height: auto; overflow: visible; display: block; }
+  .bouquet-caption{
+    margin-top: 2px;
+    font-size: 12.5px;
+    text-align: center;
+    color: var(--plum-soft);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+
+  .bouquet-flower{
+    opacity: 0;
+    transform: translate(var(--fx), var(--fy)) scale(0) rotate(-10deg);
+    transition: opacity 0.55s ease, transform 0.65s cubic-bezier(.34,1.56,.64,1);
+  }
+  .bouquet-wrap.in .bouquet-flower{
+    opacity: 1;
+    transform: translate(var(--fx), var(--fy)) scale(1) rotate(0deg);
+  }
+  .bouquet-sway{
+    transform-origin: 130px 158px;
+    animation: flowerSway 3.6s ease-in-out infinite;
+  }
+  @keyframes flowerSway{
+    0%, 100%{ transform: rotate(-1.6deg); }
+    50%{ transform: rotate(1.6deg); }
+  }
+
+  .bouquet-dot{
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    transition: opacity 0.5s ease, transform 0.6s ease;
+  }
+  .bouquet-wrap.in .bouquet-dot{
+    opacity: 1;
+    transform: translate(var(--dx), var(--dy)) scale(1);
+  }
+
+  .bouquet-leaf, .bouquet-stem, .bouquet-wrapping, .bouquet-bow{
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .bouquet-wrap.in .bouquet-leaf,
+  .bouquet-wrap.in .bouquet-stem,
+  .bouquet-wrap.in .bouquet-wrapping,
+  .bouquet-wrap.in .bouquet-bow{ opacity: 1; }
+
+  .petal-fx{
+    position: fixed;
+    pointer-events: none;
+    font-size: 15px;
+    animation: petal-fall 2.4s ease-in forwards;
+    z-index: 10;
+  }
+  @keyframes petal-fall{
+    0%{ opacity: 0; transform: translateY(0) translateX(0) rotate(0deg); }
+    10%{ opacity: 1; }
+    100%{ opacity: 0; transform: translateY(130px) translateX(var(--drift, 20px)) rotate(200deg); }
+  }
+
+  .replay-btn{
+    position: absolute;
+    bottom: 14px; right: 16px;
+    background: rgba(255,255,255,0.75);
+    border: 1px solid #F1E4E7;
+    color: var(--plum-soft);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .replay-btn.in{ opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    .phase{ opacity: 1 !important; visibility: visible !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sequence">
+
+  <section class="phase" id="phase-pulse">
+    <div class="pulse-heart"></div>
+  </section>
+
+  <section class="phase" id="phase-title">
+    <h1 class="title-text" id="titleText">Happy<br>Birthday</h1>
+    <div class="title-rule" id="titleRule"></div>
+    <p class="title-sub" id="titleSub"> Risda Lia Wardani</p>
+  </section>
+
+  <section class="phase" id="phase-cake">
+    <div class="cake-wrap" id="cakeWrap">
+      <svg class="cake-svg" viewBox="0 0 240 200">
+        <ellipse cx="120" cy="178" rx="92" ry="12" fill="#F5E6EA" />
+        <rect x="42" y="120" width="156" height="52" rx="14" fill="var(--cream-petal)" />
+        <path d="M42,132 q14,-10 28,0 q14,-10 28,0 q14,-10 28,0 q14,-10 28,0 q14,-10 28,0 q14,-10 16,0 v8 h-156 z" fill="#FDF1E6" />
+        <rect x="58" y="82" width="124" height="46" rx="14" fill="var(--blush)" />
+        <path d="M58,94 q11,-9 22,0 q11,-9 22,0 q11,-9 22,0 q11,-9 22,0 q11,-9 22,0 q11,-9 14,0 v8 h-124 z" fill="#FDF1E6" />
+        <ellipse cx="70" cy="122" rx="5" ry="4" fill="var(--blush-deep)"/>
+        <ellipse cx="120" cy="126" rx="5" ry="4" fill="var(--rose)"/>
+        <ellipse cx="170" cy="120" rx="5" ry="4" fill="var(--blush-deep)"/>
+        <ellipse cx="95" cy="86" rx="4.5" ry="3.5" fill="var(--coral)"/>
+        <ellipse cx="145" cy="88" rx="4.5" ry="3.5" fill="var(--rose)"/>
+
+        <g class="candle" data-idx="0" onclick="blowCandle(this, event)" transform="translate(80,52)">
+          <rect x="-4" y="0" width="8" height="30" rx="3" fill="var(--cream-petal)" />
+          <rect x="-4" y="6" width="8" height="4" fill="var(--blush-deep)" />
+          <rect x="-4" y="16" width="8" height="4" fill="var(--blush-deep)" />
+          <circle class="flame-glow" cx="0" cy="-6" r="10" fill="var(--butter)" opacity="0.4" />
+          <path class="flame" d="M0,-16 C5,-10 5,-3 0,0 C-5,-3 -5,-10 0,-16 Z" fill="#F3B47E" />
+        </g>
+        <g class="candle" data-idx="1" onclick="blowCandle(this, event)" transform="translate(120,40)">
+          <rect x="-4" y="0" width="8" height="34" rx="3" fill="var(--lav)" />
+          <rect x="-4" y="7" width="8" height="4" fill="#D2C5E6" />
+          <rect x="-4" y="18" width="8" height="4" fill="#D2C5E6" />
+          <circle class="flame-glow" cx="0" cy="-6" r="10" fill="var(--butter)" opacity="0.4" />
+          <path class="flame" d="M0,-17 C5.5,-11 5.5,-3 0,0 C-5.5,-3 -5.5,-11 0,-17 Z" fill="#F3B47E" />
+        </g>
+        <g class="candle" data-idx="2" onclick="blowCandle(this, event)" transform="translate(160,52)">
+          <rect x="-4" y="0" width="8" height="30" rx="3" fill="var(--mint)" />
+          <rect x="-4" y="6" width="8" height="4" fill="#B9DAC6" />
+          <rect x="-4" y="16" width="8" height="4" fill="#B9DAC6" />
+          <circle class="flame-glow" cx="0" cy="-6" r="10" fill="var(--butter)" opacity="0.4" />
+          <path class="flame" d="M0,-16 C5,-10 5,-3 0,0 C-5,-3 -5,-10 0,-16 Z" fill="#F3B47E" />
+        </g>
+      </svg>
+    </div>
+
+    <p class="cake-caption" id="cakeCaption">tiup satu satu lilinya yaa agar mati🕯️</p>
+    <p class="name-tag" id="nameTag">Risda Lia Wardani</p>
+
+    <div class="wish-form" id="wishForm">
+      <p class="wish-label">Nah semuanya lilinya udah mati — tulis satu permintaan buat Dirimu</p>
+      <input type="text" id="wishInput" maxlength="90" placeholder="semoga..." />
+      <button class="wish-submit" onclick="submitWish()">kirim permintaan</button>
+    </div>
+
+    <div class="wish-result" id="wishResult">
+      <div class="result-glow"></div>
+      <p class="result-text" id="resultText"></p>
+      <p class="result-sub">terkirim ke Allah, semoga cepat terkabul ✨</p>
+    </div>
+
+    <div class="bouquet-wrap" id="bouquetWrap">
+      <svg class="bouquet-svg" viewBox="0 0 260 168">
+        <defs>
+          <g id="petalShape"><ellipse cx="0" cy="-9" rx="5.2" ry="9.5" /></g>
+        </defs>
+
+        <!-- stems -->
+        <g class="bouquet-stem" fill="none" stroke="var(--leaf)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M130,156 Q95,120 68,80" />
+          <path d="M130,156 Q108,110 96,50" />
+          <path d="M130,156 Q128,100 130,32" />
+          <path d="M130,156 Q150,110 163,50" />
+          <path d="M130,156 Q163,120 190,80" />
+          <path d="M130,156 Q118,110 111,64" />
+          <path d="M130,156 Q142,110 149,64" />
+        </g>
+
+        <!-- leaves -->
+        <g class="bouquet-leaf" fill="var(--leaf)">
+          <ellipse cx="103" cy="118" rx="10" ry="4.5" transform="rotate(-35 103 118)"/>
+          <ellipse cx="160" cy="118" rx="10" ry="4.5" transform="rotate(35 160 118)"/>
+          <ellipse cx="122" cy="95" rx="8" ry="3.6" transform="rotate(-20 122 95)"/>
+          <ellipse cx="140" cy="95" rx="8" ry="3.6" transform="rotate(20 140 95)"/>
+        </g>
+
+        <!-- paper wrap -->
+        <path class="bouquet-wrapping" d="M96,150 L164,150 L146,167 L114,167 Z" fill="var(--cream-petal)" stroke="#F4E2D2" stroke-width="1"/>
+        <path class="bouquet-wrapping" d="M96,150 L130,158 L164,150 L130,150 Z" fill="#FEF6EC" opacity="0.8"/>
+
+        <!-- baby's breath dots -->
+        <circle class="bouquet-dot" style="--dx:58px; --dy:60px; transition-delay:.55s" cx="0" cy="0" r="2.2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:80px; --dy:30px; transition-delay:.62s" cx="0" cy="0" r="2.2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:112px; --dy:16px; transition-delay:.5s" cx="0" cy="0" r="2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:148px; --dy:16px; transition-delay:.68s" cx="0" cy="0" r="2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:180px; --dy:30px; transition-delay:.58s" cx="0" cy="0" r="2.2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:202px; --dy:60px; transition-delay:.64s" cx="0" cy="0" r="2.2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:70px; --dy:95px; transition-delay:.52s" cx="0" cy="0" r="2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+        <circle class="bouquet-dot" style="--dx:190px; --dy:95px; transition-delay:.66s" cx="0" cy="0" r="2" fill="#FFFDF9" stroke="#F0DCC9" stroke-width="0.6"/>
+
+        <!-- flowers (bloom in, whole cluster sways) -->
+        <g class="bouquet-sway">
+          <g class="bouquet-flower" style="--fx:68px; --fy:80px; transition-delay:.05s">
+            <use href="#petalShape" transform="rotate(0)" fill="var(--rose)"/>
+            <use href="#petalShape" transform="rotate(72)" fill="var(--rose)"/>
+            <use href="#petalShape" transform="rotate(144)" fill="var(--rose)"/>
+            <use href="#petalShape" transform="rotate(216)" fill="var(--rose)"/>
+            <use href="#petalShape" transform="rotate(288)" fill="var(--rose)"/>
+            <circle r="3.4" fill="var(--butter)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:96px; --fy:50px; transition-delay:.14s">
+            <use href="#petalShape" transform="rotate(10)" fill="var(--coral)"/>
+            <use href="#petalShape" transform="rotate(82)" fill="var(--coral)"/>
+            <use href="#petalShape" transform="rotate(154)" fill="var(--coral)"/>
+            <use href="#petalShape" transform="rotate(226)" fill="var(--coral)"/>
+            <use href="#petalShape" transform="rotate(298)" fill="var(--coral)"/>
+            <circle r="3.4" fill="var(--butter)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:130px; --fy:32px; transition-delay:.22s">
+            <use href="#petalShape" transform="rotate(0)" fill="var(--lav)"/>
+            <use href="#petalShape" transform="rotate(72)" fill="var(--lav)"/>
+            <use href="#petalShape" transform="rotate(144)" fill="var(--lav)"/>
+            <use href="#petalShape" transform="rotate(216)" fill="var(--lav)"/>
+            <use href="#petalShape" transform="rotate(288)" fill="var(--lav)"/>
+            <circle r="3.6" fill="var(--butter)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:163px; --fy:50px; transition-delay:.3s">
+            <use href="#petalShape" transform="rotate(-10)" fill="var(--blush-deep)"/>
+            <use href="#petalShape" transform="rotate(62)" fill="var(--blush-deep)"/>
+            <use href="#petalShape" transform="rotate(134)" fill="var(--blush-deep)"/>
+            <use href="#petalShape" transform="rotate(206)" fill="var(--blush-deep)"/>
+            <use href="#petalShape" transform="rotate(278)" fill="var(--blush-deep)"/>
+            <circle r="3.4" fill="var(--butter)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:190px; --fy:80px; transition-delay:.38s">
+            <use href="#petalShape" transform="rotate(0)" fill="var(--rose-deep)"/>
+            <use href="#petalShape" transform="rotate(72)" fill="var(--rose-deep)"/>
+            <use href="#petalShape" transform="rotate(144)" fill="var(--rose-deep)"/>
+            <use href="#petalShape" transform="rotate(216)" fill="var(--rose-deep)"/>
+            <use href="#petalShape" transform="rotate(288)" fill="var(--rose-deep)"/>
+            <circle r="3.4" fill="var(--butter)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:111px; --fy:64px; transition-delay:.46s">
+            <use href="#petalShape" transform="rotate(20)" fill="var(--cream-petal)"/>
+            <use href="#petalShape" transform="rotate(92)" fill="var(--cream-petal)"/>
+            <use href="#petalShape" transform="rotate(164)" fill="var(--cream-petal)"/>
+            <use href="#petalShape" transform="rotate(236)" fill="var(--cream-petal)"/>
+            <use href="#petalShape" transform="rotate(308)" fill="var(--cream-petal)"/>
+            <circle r="3" fill="var(--rose)"/>
+          </g>
+
+          <g class="bouquet-flower" style="--fx:149px; --fy:64px; transition-delay:.42s">
+            <use href="#petalShape" transform="rotate(-15)" fill="var(--blush)"/>
+            <use href="#petalShape" transform="rotate(57)" fill="var(--blush)"/>
+            <use href="#petalShape" transform="rotate(129)" fill="var(--blush)"/>
+            <use href="#petalShape" transform="rotate(201)" fill="var(--blush)"/>
+            <use href="#petalShape" transform="rotate(273)" fill="var(--blush)"/>
+            <circle r="3" fill="var(--rose)"/>
+          </g>
+        </g>
+
+        <!-- ribbon bow -->
+        <g class="bouquet-bow" style="transition-delay:.5s">
+          <path d="M130,150 L112,138 Q106,150 118,155 Z" fill="var(--rose-deep)"/>
+          <path d="M130,150 L148,138 Q154,150 142,155 Z" fill="var(--rose-deep)"/>
+          <circle cx="130" cy="150" r="4.5" fill="var(--rose-deepest)"/>
+        </g>
+      </svg>
+      <p class="bouquet-caption">sebuket bunga untuk Risda 💐</p>
+    </div>
+
+    <button class="replay-btn" id="replayBtn" onclick="restart()">putar ulang ↻</button>
+  </section>
+
+</div>
+
+<script>
+  const phasePulse = document.getElementById('phase-pulse');
+  const phaseTitle = document.getElementById('phase-title');
+  const phaseCake = document.getElementById('phase-cake');
+  const titleText = document.getElementById('titleText');
+  const titleRule = document.getElementById('titleRule');
+  const titleSub = document.getElementById('titleSub');
+  const cakeCaption = document.getElementById('cakeCaption');
+  const nameTag = document.getElementById('nameTag');
+  const wishForm = document.getElementById('wishForm');
+  const wishResult = document.getElementById('wishResult');
+  const resultText = document.getElementById('resultText');
+  const wishInput = document.getElementById('wishInput');
+  const replayBtn = document.getElementById('replayBtn');
+  const bouquetWrap = document.getElementById('bouquetWrap');
+  const cakeWrap = document.getElementById('cakeWrap');
+
+  let timers = [];
+  let blownCount = 0;
+  const totalCandles = 3;
+
+  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  function blowCandle(el, evt){
+    if (el.classList.contains('out')) return;
+    el.classList.add('out');
+    blownCount++;
+
+    for (let i = 0; i < 5; i++) {
+      const s = document.createElement('div');
+      s.className = 'smoke';
+      s.style.left = (evt.clientX + (Math.random() * 14 - 7)) + 'px';
+      s.style.top = (evt.clientY - 12) + 'px';
+      s.style.animationDelay = (i * 0.06) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1300);
+    }
+
+    if (blownCount >= totalCandles) {
+      cakeCaption.textContent = 'semua lilin padam — yuk buat permintaan 🌙';
+      at(600, () => wishForm.classList.add('in'));
+    }
+  }
+
+  function submitWish(){
+    const val = wishInput.value.trim();
+    const wishText = val.length ? val : 'yang terbaik untukmu';
+    wishForm.classList.remove('in');
+
+    const rect = wishForm.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const emojis = ['✨', '🌟', '💫', '🕊️', '✨'];
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement('span');
+      s.className = 'sparkle-fx';
+      s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const angle = (i / 14) * Math.PI * 2;
+      const dist = 20 + Math.random() * 30;
+      s.style.left = (cx + Math.cos(angle) * dist) + 'px';
+      s.style.top = (cy + Math.sin(angle) * dist) + 'px';
+      s.style.animationDelay = (Math.random() * 0.25) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1800);
+    }
+
+    resultText.textContent = '“' + wishText + '”';
+    cakeWrap.classList.add('shrink');
+    at(400, () => wishResult.classList.add('in'));
+    at(1000, () => {
+      bouquetWrap.classList.add('in');
+      spawnPetals();
+    });
+  }
+
+  function spawnPetals(){
+    if (!bouquetWrap) return;
+    const rect = bouquetWrap.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const top = rect.top;
+    const petals = ['🌸', '🌷', '💮', '🌺', '🌼'];
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('span');
+      p.className = 'petal-fx';
+      p.textContent = petals[Math.floor(Math.random() * petals.length)];
+      p.style.left = (cx + (Math.random() * rect.width - rect.width / 2)) + 'px';
+      p.style.top = (top - 10) + 'px';
+      p.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+      p.style.animationDelay = (Math.random() * 0.6) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 3100);
+    }
+  }
+
+  function resetCake(){
+    document.querySelectorAll('.candle').forEach(c => c.classList.remove('out'));
+    blownCount = 0;
+    cakeCaption.textContent = 'ketuk satu-satu lilinnya buat matiin ya 🕯️';
+    wishForm.classList.remove('in');
+    wishResult.classList.remove('in');
+    bouquetWrap.classList.remove('in');
+    cakeWrap.classList.remove('shrink');
+    wishInput.value = '';
+    resultText.textContent = '';
+  }
+
+  function runSequence(){
+    clearTimers();
+    [phasePulse, phaseTitle, phaseCake].forEach(p => p.classList.remove('show'));
+    titleText.classList.remove('in');
+    titleRule.classList.remove('in');
+    titleSub.classList.remove('in');
+    cakeCaption.classList.remove('in');
+    nameTag.classList.remove('in');
+    replayBtn.classList.remove('in');
+    resetCake();
+
+    phasePulse.classList.add('show');
+
+    at(2000, () => {
+      phasePulse.classList.remove('show');
+      phaseTitle.classList.add('show');
+      setTimeout(() => titleText.classList.add('in'), 100);
+      setTimeout(() => titleRule.classList.add('in'), 100);
+      setTimeout(() => titleSub.classList.add('in'), 100);
+    });
+
+    at(4400, () => {
+      phaseTitle.classList.remove('show');
+      phaseCake.classList.add('show');
+    });
+
+    at(5200, () => {
+      cakeCaption.classList.add('in');
+      nameTag.classList.add('in');
+      replayBtn.classList.add('in');
+    });
+  }
+
+  function restart(){ runSequence(); }
+
+  runSequence();
+</script>
+
+</body>
+</html>
